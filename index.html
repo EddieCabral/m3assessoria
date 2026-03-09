@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">   
+<link rel="icon" type="image/png" href="imagens/logo.jpeg">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M3 Assessoria</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+<!-- Icons (FontAwesome) -->
+<script src="https://kit.fontawesome.com/a81368914c.js" crossorigin="anonymous"></script>
+
+<style>
+/* ===== RESET ===== */
+@media only screen and (max-width: 768px) {
+    /* Ajusta título e seções */
+    h1, h2, h3 {
+        font-size: 1.5em;
+    }
+
+    /* Ajusta grid do portfólio para 1 coluna */
+    .portfolio-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        align-items: center;
+    }
+
+    /* Ajusta inputs e textarea do formulário */
+    form input, form textarea, form button {
+        width: 90%;
+    }
+
+    /* Ajusta padding das seções */
+    section {
+        padding: 20px 10px;
+    }
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: 'JetBrains Mono', monospace;
+    background: #0f1115;
+    color: #e0e0e0;
+    overflow-x: hidden;
+}
+a { text-decoration: none; color: inherit; }
+
+/* ===== PARTICLES BACKGROUND ===== */
+#particles-js {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+/* ===== MENU ===== */
+nav {
+    position: sticky;
+    top: 0;
+    background: rgba(17,19,24,0.95);
+    padding: 15px 20px;
+    display: flex;
+    justify-content: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    z-index: 100;
+}
+nav a {
+    margin: 0 18px;
+    font-weight: 600;
+    color: #00ffff;
+    transition: 0.3s;
+}
+nav a:hover { color: #ffcc00; }
+
+/* ===== HEADER ===== */
+header {
+    background: linear-gradient(135deg, #111318, #1a1c22);
+    color: #00ffff;
+    text-align: center;
+    padding: 100px 20px;
+    position: relative;
+}
+header h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 3.5rem;
+    margin-bottom: 15px;
+}
+header p { font-size: 1.3rem; color: #c0f0ff; }
+.contact-btn {
+    display: inline-block;
+    background-color: #ffcc00;
+    color: #111318;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-weight: bold;
+    margin-top: 20px;
+    transition: 0.3s;
+    box-shadow: 0 0 10px #ffcc00;
+}
+.contact-btn:hover { 
+    background-color: #e6b800; 
+    transform: translateY(-3px);
+    box-shadow: 0 0 20px #ffcc00;
+}
+
+/* ===== SEÇÕES ===== */
+section {
+    padding: 70px 20px;
+    max-width: 1000px;
+    margin: auto;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: 1s ease-out;
+}
+section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+h2 {
+    color: #00ffff;
+    text-align: center;
+    margin-bottom: 50px;
+    font-size: 2.4rem;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* ===== SERVIÇOS ===== */
+.services-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+}
+.service-item {
+    background: #1a1c22;
+    padding: 25px;
+    border-radius: 12px;
+    flex: 1 1 260px;
+    text-align: center;
+    border: 1px solid #00ffff;
+    transition: 0.3s;
+}
+.service-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 20px rgba(0,255,255,0.3);
+}
+.service-item i {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #00ffff;
+}
+
+/* ===== PORTFÓLIO ===== */
+.portfolio-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+.portfolio-grid img {
+    width: 250px;
+    height: 150px;
+    border-radius: 10px;
+    object-fit: cover;
+    transition: 0.3s;
+    border: 2px solid #00ffff;
+}
+.portfolio-grid img:hover {
+    transform: scale(1.05);
+    border-color: #ffcc00;
+}
+
+/* ===== DEPOIMENTOS ===== */
+.testimonial-container {
+    max-width: 700px;
+    margin: auto;
+    position: relative;
+    overflow: hidden;
+}
+.testimonial-slide {
+    display: none;
+    text-align: center;
+    font-style: italic;
+    color: #c0f0ff;
+}
+.testimonial-slide.active { display: block; }
+.testimonial-slide p { font-size: 1.15rem; margin-bottom: 10px; }
+.testimonial-slide h4 { color: #ffcc00; }
+
+/* ===== FORMULÁRIO ===== */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 500px;
+    margin: auto;
+}
+form input, form textarea {
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #00ffff;
+    background-color: #1a1c22;
+    color: #e0e0e0;
+    font-size: 1rem;
+}
+form input:focus, form textarea:focus {
+    border-color: #ffcc00;
+    outline: none;
+}
+form button {
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background-color: #00ffff;
+    color: #111318;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+form button:hover { background-color: #ffcc00; }
+
+/* ===== POLÍTICAS ===== */
+#politicas p { max-width:700px; margin:auto; text-align:center; color: #c0f0ff; }
+
+/* ===== FOOTER ===== */
+footer {
+    background-color: #111318;
+    color: #00ffff;
+    text-align: center;
+    padding: 30px 20px;
+}
+
+/* ===== RESPONSIVO ===== */
+@media (max-width: 768px) {
+    .services-list { flex-direction: column; align-items: center; }
+    .portfolio-grid img { width: 90%; height: auto; }
+}
+</style>
+</head>
+<body>
+
+<div id="particles-js"></div>
+
+<nav>
+    <a href="#home">Início</a>
+    <a href="#quemsomos">Quem Somos</a>
+    <a href="#servicos">Serviços</a>
+    <a href="#portifolio">Portfólio</a>
+    <a href="#depoimentos">Depoimentos</a>
+    <a href="#contato">Contato</a>
+    <a href="#politicas">Políticas</a>
+</nav>
+
+<header id="home">
+    <h1>M3 Assessoria</h1>
+    <p>Sites , planilhas, dashboards e artes personalizadas</p>
+    <a href="#contato" class="contact-btn">Fale Conosco</a>
+</header>
+
+<section id="quemsomos">
+    <h2>Quem Somos</h2>
+    <p style="text-align:center; max-width:700px; margin:auto;">
+        A <strong>M3 Assessoria</strong> nasceu para ajudar pequenos negócios a terem presença digital profissional. Missão: entregar soluções simples, práticas e eficientes.
+    </p>
+</section>
+
+<section id="servicos">
+    <h2>Serviços</h2>
+    <div class="services-list">
+        <div class="service-item"><i class="fas fa-laptop-code"></i><br>Desenvolvimento de sites personalizados</div>
+        <div class="service-item"><i class="fas fa-chart-line"></i><br>Planilhas organizadas e dashboards Power BI</div>
+        <div class="service-item"><i class="fas fa-paint-brush"></i><br>Criação de logotipos, artes e tags personalizadas.</div>
+    </div>
+</section>
+
+<section id="portifolio">
+    <h2>Portfólio</h2>
+    <div class="portfolio-grid">
+        <!-- Uni TV -->
+        <a href="https://www.minhaunitv.com.br" target="_blank">
+            <img src="imagens/minhaunitv.png" alt="Site Uni TV">
+        </a>
+
+        <!-- Home Care -->
+        <a href="//https://eddiecabral.github.io/contagemhomecare/" target="_blank">
+            <img src="imagens/imagemhomecare.png" alt="Site Home Care">
+        </a>
+
+        <!-- Investidor Brasileiro -->
+        <a href="https://www.oinvestidorbrasileiro.com.br" target="_blank">
+            <img src="imagens/oinvestidorbrasileiro.png" alt="Site Investidor Brasileiro">
+        </a>
+    </div>
+</section>
+
+<section id="depoimentos">
+    <h2>Depoimentos</h2>
+    <div class="testimonial-container">
+        <div class="testimonial-slide active">
+            <p>"Excelente serviço, rápido e profissional!"</p>
+            <h4>— Mariana O.</h4>
+        </div>
+        <div class="testimonial-slide">
+            <p>"A M3 Assessoria transformou minha planilha em algo incrível."</p>
+            <h4>— Otávio N.</h4>
+        </div>
+        <div class="testimonial-slide">
+            <p>"Recomendo demais! Ótimo atendimento e resultado."</p>
+            <h4>— MIlena C.</h4>
+        </div>
+    </div>
+</section>
+
+<section id="contato">
+    <h2>Contato</h2>
+    <form action="https://formspree.io/f/mvzwzvlq" method="POST">
+        <input type="text" name="name" placeholder="Seu nome" required>
+        <input type="email" name="email" placeholder="Seu email" required>
+        <textarea name="message" rows="4" placeholder="Mensagem" required></textarea>
+        <button type="submit">Enviar Mensagem</button>
+    </form>
+    <p style="text-align:center; margin-top:15px;">
+        Ou fale pelo WhatsApp: 
+        <a class="contact-btn" href="https://wa.me/31994964331" target="_blank">Clique aqui</a>
+    </p>
+</section>
+
+<section id="politicas">
+    <h2>Políticas</h2>
+    <p>
+        <strong>Política de Privacidade e Cookies:</strong> Nosso site respeita sua privacidade. Cookies são utilizados apenas para melhorar a experiência do usuário.
+    </p>
+</section>
+
+<footer>
+    <p>© 2026 M3 Assessoria — Todos os direitos reservados</p>
+</footer>
+
+<!-- ===== JS ===== -->
+<script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+<script>
+// PARTICLES BACKGROUND
+particlesJS("particles-js", {
+  "particles": {
+    "number": {"value":50},
+    "color":{"value":"#00ffff"},
+    "shape":{"type":"circle"},
+    "opacity":{"value":0.2},
+    "size":{"value":3},
+    "line_linked":{"enable":true,"distance":150,"color":"#00ffff","opacity":0.1,"width":1},
+    "move":{"enable":true,"speed":2}
+  }
+});
+
+// CARROSSEL DE DEPOIMENTOS
+let index = 0;
+const slides = document.querySelectorAll('.testimonial-slide');
+function showSlide(i){
+    slides.forEach(s=>s.classList.remove('active'));
+    slides[i].classList.add('active');
+}
+function nextSlide(){
+    index=(index+1)%slides.length;
+    showSlide(index);
+}
+setInterval(nextSlide, 4000);
+
+// FADE-IN SECTIONS
+const sections = document.querySelectorAll('section');
+window.addEventListener('scroll',()=>{
+    sections.forEach(sec=>{
+        const top = sec.getBoundingClientRect().top;
+        const h = window.innerHeight;
+        if(top < h - 100){ sec.classList.add('visible'); }
+    });
+});
+</script>
+
+</body>
+</html>
